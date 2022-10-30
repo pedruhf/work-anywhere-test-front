@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./App.module.scss";
 
-import { Header, FilmCard } from "@/presentation/components";
+import { Header, FilmCard, Pagination } from "@/presentation/components";
 import { makeGetFilmsUseCase } from "@/main/factories/data/use-cases";
 import { Film } from "@/domain/models";
 
@@ -9,8 +9,19 @@ const remoteGetFilmes = makeGetFilmsUseCase();
 
 function App() {
   const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
+  const [limit, setLimit] = useState<number>(2);
   const [films, setFilms] = useState<Film[]>([]);
+
+  const handleNextPage = async () => {
+    setPage(prevState => prevState + 1);
+    const films = await remoteGetFilmes.execute({ page, limit });
+    setFilms(films);
+  };
+  const handlePrevPage = async () => {
+    setPage(prevState => prevState - 1);
+    const films = await remoteGetFilmes.execute({ page, limit });
+    setFilms(films);
+  };
 
   useEffect(() => {
     remoteGetFilmes
@@ -32,6 +43,7 @@ function App() {
             />
           ))}
       </div>
+      <Pagination currentPage={page} totalPages={films.length / limit} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </div>
   );
 }
