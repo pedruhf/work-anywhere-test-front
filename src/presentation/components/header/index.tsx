@@ -6,6 +6,7 @@ const Header: React.FC = () => {
   return (
     <div className={styles.headerWrapper}>
       <h1>WORK ANYWHERE FILMS</h1>
+      <strong>Pedro Freitas</strong>
     </div>
   );
 };
