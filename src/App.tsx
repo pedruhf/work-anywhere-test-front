@@ -1,20 +1,36 @@
-import { Header, FilmCard } from "@/presentation/components";
-
+import { useEffect, useState } from "react";
 import styles from "./App.module.scss";
 
+import { Header, FilmCard } from "@/presentation/components";
+import { makeGetFilmsUseCase } from "@/main/factories/data/use-cases";
+import { Film } from "@/domain/models";
+
+const remoteGetFilmes = makeGetFilmsUseCase();
+
 function App() {
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(10);
+  const [films, setFilms] = useState<Film[]>([]);
+
+  useEffect(() => {
+    remoteGetFilmes
+      .execute({ page, limit })
+      .then((data) => {
+        setFilms(data);
+      })
+      .catch((err) => alert(err));
+  }, []);
+
   return (
     <div className={styles.App}>
       <Header />
       <div className={styles.filmsCardWrapper}>
-        <FilmCard film={{
-          id: 1,
-          title: "a volta dos q nao foram",
-          description: "a work anywhere estava maluca e resolveu nao me ligar",
-          director: "Elton Jhon",
-          producer: "Ze Maia Miguel",
-          bannerUrl: "https://image.tmdb.org/t/p/w533_and_h300_bestv2/3cyjYtLWCBE1uvWINHFsFnE8LUK.jpg"
-        }} />
+        {films.length > 0 &&
+          films.map((film) => (
+            <FilmCard
+              film={film}
+            />
+          ))}
       </div>
     </div>
   );
