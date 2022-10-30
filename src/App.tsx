@@ -9,25 +9,27 @@ const remoteGetFilmes = makeGetFilmsUseCase();
 
 function App() {
   const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(2);
+  const [limit, setLimit] = useState<number>(10);
   const [films, setFilms] = useState<Film[]>([]);
+  const [totalFilms, setTotalFilms] = useState<number>(0);
 
   const handleNextPage = async () => {
+    const data = await remoteGetFilmes.execute({ page: page + 1, limit });
     setPage(prevState => prevState + 1);
-    const films = await remoteGetFilmes.execute({ page, limit });
-    setFilms(films);
+    setFilms(data.films);
   };
   const handlePrevPage = async () => {
+    const data = await remoteGetFilmes.execute({ page: page -1, limit });
     setPage(prevState => prevState - 1);
-    const films = await remoteGetFilmes.execute({ page, limit });
-    setFilms(films);
+    setFilms(data.films);
   };
 
   useEffect(() => {
     remoteGetFilmes
       .execute({ page, limit })
       .then((data) => {
-        setFilms(data);
+        setFilms(data.films);
+        setTotalFilms(data.totalFilms);
       })
       .catch((err) => alert(err));
   }, []);
@@ -43,7 +45,7 @@ function App() {
             />
           ))}
       </div>
-      <Pagination currentPage={page} totalPages={films.length / limit} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
+      <Pagination currentPage={page} totalPages={Math.ceil(totalFilms / limit)} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </div>
   );
 }

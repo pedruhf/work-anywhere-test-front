@@ -5,6 +5,12 @@ export type GetFilmsFilterParams = {
   page: number;
 }
 
+export type GetFilmsResponse = {
+  films: Film[];
+  totalFilms: number;
+}
+
+
 export interface GetFilms {
-  execute(filterParams?: GetFilmsFilterParams): Promise<Film[]>;
+  execute(filterParams?: GetFilmsFilterParams): Promise<GetFilmsResponse>;
 }

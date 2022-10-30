@@ -4,8 +4,8 @@ import styles from "./styles.module.scss";
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
-  handleNextPage: (page: number) => void;
-  handlePrevPage: (page: number) => void;
+  handleNextPage: (page: number) => Promise<void>;
+  handlePrevPage: (page: number) => Promise<void>;
 }
 const Pagination: React.FC<PaginationProps> = ({
   currentPage,
@@ -17,7 +17,7 @@ const Pagination: React.FC<PaginationProps> = ({
     <div className={styles.paginationButtonWrapper}>
       <button
         className={styles.paginationButton}
-        onClick={() => handlePrevPage(currentPage)}
+        onClick={async () => await handlePrevPage(currentPage)}
         disabled={currentPage === 1}
       >
         &#8592;
@@ -29,7 +29,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
       <button
         className={styles.paginationButton}
-        onClick={() => handleNextPage(currentPage)}
+        onClick={async () => await handleNextPage(currentPage)}
         disabled={currentPage === totalPages}
       >
         &#8594;
