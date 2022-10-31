@@ -5,6 +5,25 @@
     flex-direction: column;
     align-items: center;
   }
+
+  .filmsCardNoContent {
+    width: 300px;
+    height: 150px;
+    background: #141414;
+    margin: 0 auto;
+    border-radius: 0.3rem;
+    box-shadow: 5px 5px 3px rgba(0,0,0, 0.5);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    text-transform: uppercase;
+
+    button {
+      padding: 0.5rem;
+    }
+  }
 }
 
 
