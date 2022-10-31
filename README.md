@@ -25,7 +25,5 @@ npm run dev
 * Clean Architecture
 * POO
 * Design Patterns
-* Docker e Docker Compose
-* Testes automatizados
 * Boas práticas
 ```
