@@ -17,3 +17,15 @@ npm run dev
  * Vite: ^3.2.0
  * Axios: ^1.1.3
  * SASS: ^1.55.0
+ 
+ ### Diferenciais:
+```
+* Clean Code
+* SOLID principles
+* Clean Architecture
+* POO
+* Design Patterns
+* Docker e Docker Compose
+* Testes automatizados
+* Boas práticas
+```
